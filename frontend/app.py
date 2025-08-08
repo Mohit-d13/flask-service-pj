@@ -48,5 +48,32 @@ def signup():
 def submit():
     return render_template('submit.html')
 
+@app.route('/to_do_item', methods=['GET', 'POST'])
+def to_do_item():
+    if request.method == 'POST':
+        form_data = request.form
+        item_dt = form_data.to_dict()
+        
+        error = None
+        if not item_dt['name']:
+            error = "Item name is required."
+        if not item_dt['description']:
+            error = "Item description is required."
+        
+            
+        if error is None:
+            # convert from_dict to json format
+            json_data = json.dumps(item_dt)
+            response = requests.post(f"{backend_uri}/submittodoitem", json=json_data)
+            if response.status_code == 200:
+                return redirect(url_for('submit'))
+            else:
+                error = "Failed to submit data."
+        
+        flash(error)
+         
+    return render_template('to_do_item.html')
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

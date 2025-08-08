@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block title %} To do page - {% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <h3 class="mb-4">Item Details</h3>
+        <div class="mb-3">
+            <input class="form-control p-2" type="text" name="name" placeholder="Enter Item name..." required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control p-2" type="text" name="description" placeholder="Enter Item description..." required>
+        </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+    <div class="errors">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        <strong class="text-danger">{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}
