@@ -57,6 +57,8 @@ def to_do_item():
         error = None
         if not item_dt['id']:
             error = "Item id is required."
+        if not item_dt['uuid']:
+            error = "UUID is missing"
         if not item_dt['name']:
             error = "Item name is required."
         if not item_dt['description']:
