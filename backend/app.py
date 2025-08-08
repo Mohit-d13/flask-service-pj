@@ -22,6 +22,17 @@ user_collection = db["user"]
 
 app = Flask(__name__)
 
+st_details = {
+    "id": 11382,
+    "name": "Jitu Rajput",
+    "father_name": "Prahlad Rajput",
+    "class": "9 C",
+    "roll_no": 23,
+    "address": "51 chaat street, Indore, M.P.",
+    "email": "jiturajput4456@email.com",
+    "phone": "123456789"
+}
+
 # This function writes data to a backend file
 def write_to_file():
     with open(filename, 'w') as file:
@@ -35,6 +46,24 @@ def read_from_file():
     content_list = content.split(", ")
     # split the returned string into a python list 
     return content_list
+
+def write_to_json(data):
+    with open('new_file.json', 'w') as file:
+        json.dump(data, file)
+        
+def read_from_json():
+    with open('new_file.json', 'r') as file:
+        content = json.load(file)
+        
+    return content
+        
+@app.route('/api')
+def get_json_data():
+    write_to_json(st_details)
+    data = read_from_json()
+    if not data:
+        return {"error": "data not found"}, 404
+    return data
 
 @app.route('/api2')
 def get_info():
