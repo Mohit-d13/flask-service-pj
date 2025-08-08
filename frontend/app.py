@@ -55,6 +55,8 @@ def to_do_item():
         item_dt = form_data.to_dict()
         
         error = None
+        if not item_dt['id']:
+            error = "Item id is required."
         if not item_dt['name']:
             error = "Item name is required."
         if not item_dt['description']:
